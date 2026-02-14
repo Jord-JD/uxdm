@@ -1,8 +1,8 @@
 <?php
 
-use DivineOmega\uxdm\Objects\DataItem;
-use DivineOmega\uxdm\Objects\DataRow;
-use DivineOmega\uxdm\Objects\Destinations\NullDestination;
+use JordJD\uxdm\Objects\DataItem;
+use JordJD\uxdm\Objects\DataRow;
+use JordJD\uxdm\Objects\Destinations\NullDestination;
 use PHPUnit\Framework\TestCase;
 
 final class NullDestinationTest extends TestCase

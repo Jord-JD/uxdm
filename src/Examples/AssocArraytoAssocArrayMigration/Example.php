@@ -2,9 +2,9 @@
 
 require_once __DIR__.'/../../../vendor/autoload.php';
 
-use DivineOmega\uxdm\Objects\Destinations\AssociativeArrayDestination;
-use DivineOmega\uxdm\Objects\Migrator;
-use DivineOmega\uxdm\Objects\Sources\AssociativeArraySource;
+use JordJD\uxdm\Objects\Destinations\AssociativeArrayDestination;
+use JordJD\uxdm\Objects\Migrator;
+use JordJD\uxdm\Objects\Sources\AssociativeArraySource;
 
 $sourceArray = [
     ['name' => 'James', 'height' => 1.88],

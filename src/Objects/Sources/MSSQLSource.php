@@ -1,8 +1,8 @@
 <?php
 
-namespace DivineOmega\uxdm\Objects\Sources;
+namespace JordJD\uxdm\Objects\Sources;
 
-use DivineOmega\uxdm\Interfaces\SourceInterface;
+use JordJD\uxdm\Interfaces\SourceInterface;
 use Exception;
 use PDO;
 

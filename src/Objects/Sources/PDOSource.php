@@ -1,11 +1,11 @@
 <?php
 
-namespace DivineOmega\uxdm\Objects\Sources;
+namespace JordJD\uxdm\Objects\Sources;
 
-use DivineOmega\uxdm\Interfaces\SourceInterface;
-use DivineOmega\uxdm\Objects\DataItem;
-use DivineOmega\uxdm\Objects\DataRow;
-use DivineOmega\uxdm\Objects\Sources\PDO\Join;
+use JordJD\uxdm\Interfaces\SourceInterface;
+use JordJD\uxdm\Objects\DataItem;
+use JordJD\uxdm\Objects\DataRow;
+use JordJD\uxdm\Objects\Sources\PDO\Join;
 use Exception;
 use PDO;
 use PDOStatement;

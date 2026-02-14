@@ -1,6 +1,6 @@
 <?php
 
-use DivineOmega\uxdm\Objects\Sources\WordPressPostSource;
+use JordJD\uxdm\Objects\Sources\WordPressPostSource;
 use PHPUnit\Framework\TestCase;
 
 final class WordPressPostSourceTest extends TestCase

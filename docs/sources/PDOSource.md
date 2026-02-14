@@ -42,7 +42,7 @@ PDO sources allow retrieval of data from multiple tables. You can do this via ov
 or by adding joins. You can add a join to another table quite easily. See the following example.
 
 ```php
-use DivineOmega\uxdm\Objects\Sources\PDO\Join;
+use JordJD\uxdm\Objects\Sources\PDO\Join;
 $pdoSource->addJoin(new Join('table_to_join_to', 'join_to_key', 'join_from_key'));
 ```
 

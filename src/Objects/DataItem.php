@@ -1,6 +1,6 @@
 <?php
 
-namespace DivineOmega\uxdm\Objects;
+namespace JordJD\uxdm\Objects;
 
 class DataItem
 {

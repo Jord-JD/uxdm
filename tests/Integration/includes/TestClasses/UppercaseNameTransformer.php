@@ -1,9 +1,9 @@
 <?php
 
-namespace DivineOmega\uxdm\TestIntegrationClasses;
+namespace JordJD\uxdm\TestIntegrationClasses;
 
-use DivineOmega\uxdm\Interfaces\TransformerInterface;
-use DivineOmega\uxdm\Objects\DataRow;
+use JordJD\uxdm\Interfaces\TransformerInterface;
+use JordJD\uxdm\Objects\DataRow;
 
 class UppercaseNameTransformer implements TransformerInterface
 {

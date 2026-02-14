@@ -3,10 +3,10 @@
 require_once __DIR__.'/../../../vendor/autoload.php';
 
 use Cache\Adapter\Filesystem\FilesystemCachePool;
-use DivineOmega\uxdm\Objects\DataItem;
-use DivineOmega\uxdm\Objects\Destinations\PDODestination;
-use DivineOmega\uxdm\Objects\Migrator;
-use DivineOmega\uxdm\Objects\Sources\PDOSource;
+use JordJD\uxdm\Objects\DataItem;
+use JordJD\uxdm\Objects\Destinations\PDODestination;
+use JordJD\uxdm\Objects\Migrator;
+use JordJD\uxdm\Objects\Sources\PDOSource;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 

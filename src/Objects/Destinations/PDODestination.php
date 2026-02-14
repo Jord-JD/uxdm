@@ -1,9 +1,9 @@
 <?php
 
-namespace DivineOmega\uxdm\Objects\Destinations;
+namespace JordJD\uxdm\Objects\Destinations;
 
-use DivineOmega\uxdm\Interfaces\DestinationInterface;
-use DivineOmega\uxdm\Objects\DataRow;
+use JordJD\uxdm\Interfaces\DestinationInterface;
+use JordJD\uxdm\Objects\DataRow;
 use PDO;
 use PDOException;
 

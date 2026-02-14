@@ -1,8 +1,8 @@
 <?php
 
-use DivineOmega\uxdm\Objects\DataItem;
-use DivineOmega\uxdm\Objects\DataRow;
-use DivineOmega\uxdm\Objects\Destinations\DebugOutputDestination;
+use JordJD\uxdm\Objects\DataItem;
+use JordJD\uxdm\Objects\DataRow;
+use JordJD\uxdm\Objects\Destinations\DebugOutputDestination;
 use PHPUnit\Framework\TestCase;
 
 final class DebugOutputDestinationTest extends TestCase

@@ -1,6 +1,6 @@
 <?php
 
-use DivineOmega\uxdm\Objects\Sources\PDO\Join;
+use JordJD\uxdm\Objects\Sources\PDO\Join;
 use PHPUnit\Framework\TestCase;
 
 final class PDOJoinTest extends TestCase

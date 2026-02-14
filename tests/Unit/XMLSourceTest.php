@@ -1,6 +1,6 @@
 <?php
 
-use DivineOmega\uxdm\Objects\Sources\XMLSource;
+use JordJD\uxdm\Objects\Sources\XMLSource;
 use PHPUnit\Framework\TestCase;
 
 final class XMLSourceTest extends TestCase

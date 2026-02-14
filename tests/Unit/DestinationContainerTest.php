@@ -1,7 +1,7 @@
 <?php
 
-use DivineOmega\uxdm\Objects\DestinationContainer;
-use DivineOmega\uxdm\Objects\Destinations\DebugOutputDestination;
+use JordJD\uxdm\Objects\DestinationContainer;
+use JordJD\uxdm\Objects\Destinations\DebugOutputDestination;
 use PHPUnit\Framework\TestCase;
 
 final class DestinationContainerTest extends TestCase

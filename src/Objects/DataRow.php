@@ -1,10 +1,10 @@
 <?php
 
-namespace DivineOmega\uxdm\Objects;
+namespace JordJD\uxdm\Objects;
 
-use DivineOmega\OmegaValidator\Validator;
-use DivineOmega\uxdm\Objects\Exceptions\NoDataItemsInDataRowException;
-use DivineOmega\uxdm\Objects\Exceptions\ValidationException;
+use JordJD\OmegaValidator\Validator;
+use JordJD\uxdm\Objects\Exceptions\NoDataItemsInDataRowException;
+use JordJD\uxdm\Objects\Exceptions\ValidationException;
 
 class DataRow
 {

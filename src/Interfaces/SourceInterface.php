@@ -1,6 +1,6 @@
 <?php
 
-namespace DivineOmega\uxdm\Interfaces;
+namespace JordJD\uxdm\Interfaces;
 
 interface SourceInterface
 {

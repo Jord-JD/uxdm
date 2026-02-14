@@ -1,6 +1,6 @@
 <?php
 
-use DivineOmega\uxdm\Objects\Sources\AssociativeArraySource;
+use JordJD\uxdm\Objects\Sources\AssociativeArraySource;
 use PHPUnit\Framework\TestCase;
 
 final class AssociativeArraySourceTest extends TestCase

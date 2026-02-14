@@ -1,6 +1,6 @@
 <?php
 
-use DivineOmega\uxdm\Objects\Sources\CSVSource;
+use JordJD\uxdm\Objects\Sources\CSVSource;
 use PHPUnit\Framework\TestCase;
 
 final class CSVSourceTest extends TestCase

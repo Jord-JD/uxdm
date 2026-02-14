@@ -1,8 +1,8 @@
 <?php
 
-namespace DivineOmega\uxdm\Interfaces;
+namespace JordJD\uxdm\Interfaces;
 
-use DivineOmega\uxdm\Objects\DataRow;
+use JordJD\uxdm\Objects\DataRow;
 
 interface TransformerInterface
 {

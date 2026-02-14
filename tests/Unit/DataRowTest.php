@@ -1,12 +1,12 @@
 <?php
 
-use DivineOmega\OmegaValidator\Rules\IsEmail;
-use DivineOmega\OmegaValidator\Rules\IsString;
-use DivineOmega\OmegaValidator\Rules\Required;
-use DivineOmega\uxdm\Objects\DataItem;
-use DivineOmega\uxdm\Objects\DataRow;
-use DivineOmega\uxdm\Objects\Exceptions\NoDataItemsInDataRowException;
-use DivineOmega\uxdm\Objects\Exceptions\ValidationException;
+use JordJD\OmegaValidator\Rules\IsEmail;
+use JordJD\OmegaValidator\Rules\IsString;
+use JordJD\OmegaValidator\Rules\Required;
+use JordJD\uxdm\Objects\DataItem;
+use JordJD\uxdm\Objects\DataRow;
+use JordJD\uxdm\Objects\Exceptions\NoDataItemsInDataRowException;
+use JordJD\uxdm\Objects\Exceptions\ValidationException;
 use PHPUnit\Framework\TestCase;
 
 final class DataRowTest extends TestCase

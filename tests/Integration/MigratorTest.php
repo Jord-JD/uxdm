@@ -1,14 +1,14 @@
 <?php
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
-use DivineOmega\uxdm\Objects\Destinations\PDODestination;
-use DivineOmega\uxdm\Objects\Exceptions\MissingFieldToMigrateException;
-use DivineOmega\uxdm\Objects\Exceptions\NoDestinationException;
-use DivineOmega\uxdm\Objects\Exceptions\NoSourceException;
-use DivineOmega\uxdm\Objects\Migrator;
-use DivineOmega\uxdm\Objects\Sources\PDOSource;
-use DivineOmega\uxdm\TestIntegrationClasses\Md5NameTransformer;
-use DivineOmega\uxdm\TestIntegrationClasses\UppercaseNameTransformer;
+use JordJD\uxdm\Objects\Destinations\PDODestination;
+use JordJD\uxdm\Objects\Exceptions\MissingFieldToMigrateException;
+use JordJD\uxdm\Objects\Exceptions\NoDestinationException;
+use JordJD\uxdm\Objects\Exceptions\NoSourceException;
+use JordJD\uxdm\Objects\Migrator;
+use JordJD\uxdm\Objects\Sources\PDOSource;
+use JordJD\uxdm\TestIntegrationClasses\Md5NameTransformer;
+use JordJD\uxdm\TestIntegrationClasses\UppercaseNameTransformer;
 use PHPUnit\Framework\TestCase;
 
 final class MigratorTest extends TestCase

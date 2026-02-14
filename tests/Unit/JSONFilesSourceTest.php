@@ -1,6 +1,6 @@
 <?php
 
-use DivineOmega\uxdm\Objects\Sources\JSONFilesSource;
+use JordJD\uxdm\Objects\Sources\JSONFilesSource;
 use PHPUnit\Framework\TestCase;
 
 final class JSONFilesSourceTest extends TestCase

@@ -1,6 +1,6 @@
 <?php
 
-use DivineOmega\uxdm\Objects\Sources\WordPressUserSource;
+use JordJD\uxdm\Objects\Sources\WordPressUserSource;
 use PHPUnit\Framework\TestCase;
 
 final class WordPressUserSourceTest extends TestCase

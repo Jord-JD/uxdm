@@ -1,10 +1,10 @@
 <?php
 
-namespace DivineOmega\uxdm\TestIntegrationClasses;
+namespace JordJD\uxdm\TestIntegrationClasses;
 
-use DivineOmega\uxdm\Interfaces\TransformerInterface;
-use DivineOmega\uxdm\Objects\DataItem;
-use DivineOmega\uxdm\Objects\DataRow;
+use JordJD\uxdm\Interfaces\TransformerInterface;
+use JordJD\uxdm\Objects\DataItem;
+use JordJD\uxdm\Objects\DataRow;
 
 class Md5NameTransformer implements TransformerInterface
 {

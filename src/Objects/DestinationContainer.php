@@ -1,8 +1,8 @@
 <?php
 
-namespace DivineOmega\uxdm\Objects;
+namespace JordJD\uxdm\Objects;
 
-use DivineOmega\uxdm\Interfaces\DestinationInterface;
+use JordJD\uxdm\Interfaces\DestinationInterface;
 
 class DestinationContainer
 {

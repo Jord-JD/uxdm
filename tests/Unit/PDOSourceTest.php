@@ -1,6 +1,6 @@
 <?php
 
-use DivineOmega\uxdm\Objects\Sources\PDOSource;
+use JordJD\uxdm\Objects\Sources\PDOSource;
 use PHPUnit\Framework\TestCase;
 
 final class PDOSourceTest extends TestCase

@@ -1,6 +1,6 @@
 <?php
 
-namespace DivineOmega\uxdm\Objects\Exceptions;
+namespace JordJD\uxdm\Objects\Exceptions;
 
 use Exception;
 

@@ -1,14 +1,14 @@
 <?php
 
-namespace DivineOmega\uxdm\Objects;
+namespace JordJD\uxdm\Objects;
 
-use DivineOmega\CliProgressBar\ProgressBar;
-use DivineOmega\uxdm\Interfaces\DestinationInterface;
-use DivineOmega\uxdm\Interfaces\SourceInterface;
-use DivineOmega\uxdm\Interfaces\TransformerInterface;
-use DivineOmega\uxdm\Objects\Exceptions\MissingFieldToMigrateException;
-use DivineOmega\uxdm\Objects\Exceptions\NoDestinationException;
-use DivineOmega\uxdm\Objects\Exceptions\NoSourceException;
+use JordJD\CliProgressBar\ProgressBar;
+use JordJD\uxdm\Interfaces\DestinationInterface;
+use JordJD\uxdm\Interfaces\SourceInterface;
+use JordJD\uxdm\Interfaces\TransformerInterface;
+use JordJD\uxdm\Objects\Exceptions\MissingFieldToMigrateException;
+use JordJD\uxdm\Objects\Exceptions\NoDestinationException;
+use JordJD\uxdm\Objects\Exceptions\NoSourceException;
 use Psr\Cache\CacheItemPoolInterface;
 
 /**

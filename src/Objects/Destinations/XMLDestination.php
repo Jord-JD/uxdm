@@ -1,8 +1,8 @@
 <?php
 
-namespace DivineOmega\uxdm\Objects\Destinations;
+namespace JordJD\uxdm\Objects\Destinations;
 
-use DivineOmega\uxdm\Interfaces\DestinationInterface;
+use JordJD\uxdm\Interfaces\DestinationInterface;
 use DOMDocument;
 use DOMElement;
 

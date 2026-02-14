@@ -1,8 +1,8 @@
 <?php
 
-namespace DivineOmega\uxdm\Objects\Exceptions;
+namespace JordJD\uxdm\Objects\Exceptions;
 
-use DivineOmega\uxdm\Objects\DataRow;
+use JordJD\uxdm\Objects\DataRow;
 use Exception;
 
 class ValidationException extends Exception

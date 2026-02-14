@@ -2,9 +2,9 @@
 
 require_once __DIR__.'/../../../vendor/autoload.php';
 
-use DivineOmega\uxdm\Objects\Destinations\CSVDestination;
-use DivineOmega\uxdm\Objects\Migrator;
-use DivineOmega\uxdm\Objects\Sources\CSVSource;
+use JordJD\uxdm\Objects\Destinations\CSVDestination;
+use JordJD\uxdm\Objects\Migrator;
+use JordJD\uxdm\Objects\Sources\CSVSource;
 
 $csvSource = new CSVSource(__DIR__.'/source.csv');
 $csvDestination = new CSVDestination(__DIR__.'/destination.csv');
