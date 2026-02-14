@@ -2,9 +2,22 @@
 
 UXDM helps developers migrate data from one system or format to another.
 
-<p align="center">
-    <img src="assets/images/uxdm-data-migration-example.png">
-</p>
+```php
+// Setup your source and destination objects.
+// This example uses database connections, but UXDM supports many different source and destination formats.
+$pdoSource = new PDOSource(new PDO('mysql:dbname=old-test;host=localhost', 'un', 'pw'), 'users');
+$pdoDestination = new PDODestination(new PDO('mysql:dbname=new-test;host=localhost', 'un', 'pw'), 'new_users');
+
+// Create a new migrator
+$migrator = new Migrator;
+$migrator->setSource($pdoSource)                      // Source
+         ->setDestination($pdoDestination)            // Destination
+         ->setFieldsToMigrate(['id', 'email', 'name']) // Fields to migrate
+         ->setKeyFields(['id'])                       // Key(s) used to identify unique rows
+         ->setFieldMap(['name' => 'full_name'])       // Mapping of field names, from source to destination
+         ->withProgressBar()                          // Show progress bar, when run in CLI.
+         ->migrate();                                 // Do the migration!
+```
 
 <p align="center">
     <a href="https://github.com/Jord-JD/uxdm/actions/workflows/phpunit.yml"><img src="https://github.com/Jord-JD/uxdm/actions/workflows/phpunit.yml/badge.svg?branch=master"></a>
