@@ -3,6 +3,8 @@
 UXDM helps developers migrate data from one system or format to another.
 
 ```php
+// composer require jord-jd/uxdm
+
 // Setup your source and destination objects.
 // This example uses database connections, but UXDM supports many different source and destination formats.
 $pdoSource = new PDOSource(new PDO('mysql:dbname=old-test;host=localhost', 'un', 'pw'), 'users');
