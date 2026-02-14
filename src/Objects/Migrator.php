@@ -181,7 +181,7 @@ class Migrator
     /**
      * Sets the validation rules for the source data.
      *
-     * @see https://github.com/DivineOmega/omega-validator
+     * @see https://github.com/Jord-JD/omega-validator
      *
      * @param array $rules
      *

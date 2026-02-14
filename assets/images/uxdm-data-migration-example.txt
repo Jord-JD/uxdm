@@ -1,4 +1,4 @@
-// composer require divineomega/uxdm
+// composer require jord-jd/uxdm
 
 // Setup your source and destination objects.
 // This example uses database connections, but UXDM supports many different source and destination formats.

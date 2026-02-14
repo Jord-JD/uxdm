@@ -4,4 +4,4 @@ The UXDM Eloquent destination allows you to migrate data into an Eloquent model.
 into a system using the Eloquent ORM, such as a Laravel project.
 
 For installation and usage documentation, 
-see the [UXDM Eloquent repository](https://github.com/DivineOmega/uxdm-eloquent).
+see the [UXDM Eloquent repository](https://github.com/Jord-JD/uxdm-eloquent).

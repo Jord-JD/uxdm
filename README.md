@@ -7,10 +7,10 @@ UXDM helps developers migrate data from one system or format to another.
 </p>
 
 <p align="center">
-    <a href="https://github.com/DivineOmega/uxdm/actions/workflows/phpunit.yml"><img src="https://github.com/DivineOmega/uxdm/actions/workflows/phpunit.yml/badge.svg?branch=master"></a>
-    <a href="https://coveralls.io/github/DivineOmega/uxdm?branch=master"><img src="https://coveralls.io/repos/github/DivineOmega/uxdm/badge.svg?branch=master"></a>
+    <a href="https://github.com/Jord-JD/uxdm/actions/workflows/phpunit.yml"><img src="https://github.com/Jord-JD/uxdm/actions/workflows/phpunit.yml/badge.svg?branch=master"></a>
+    <a href="https://coveralls.io/github/Jord-JD/uxdm?branch=master"><img src="https://coveralls.io/repos/github/Jord-JD/uxdm/badge.svg?branch=master"></a>
     <a href="https://styleci.io/repos/130364449"><img src="https://styleci.io/repos/130364449/shield?branch=master"></a>
-    <a href="https://packagist.org/packages/divineomega/uxdm/stats"><img src="https://img.shields.io/packagist/dt/DivineOmega/uxdm.svg"></a>
+    <a href="https://packagist.org/packages/jord-jd/uxdm/stats"><img src="https://img.shields.io/packagist/dt/Jord-JD/uxdm.svg"></a>
 </p>
 
 ## Installation
@@ -18,7 +18,7 @@ UXDM helps developers migrate data from one system or format to another.
 UXDM can be easily installed using Composer. Just run the following command from the root of your project.
 
 ```
-composer require divineomega/uxdm
+composer require jord-jd/uxdm
 ```
 
 If you have never used the Composer dependency manager before, head to the [Composer website](https://getcomposer.org/) for more information on how to get started.
@@ -132,7 +132,7 @@ This migration will validate the source data matches the defined validation rule
 * 'email' must be present, a string, and a correctly formatted email address.
 * 'name' must be present, and a string.
 
-UXDM uses the [Omega Validator](https://github.com/DivineOmega/omega-validator) package. 
+UXDM uses the [Omega Validator](https://github.com/Jord-JD/omega-validator) package. 
 See its documentation for all available validation rules.
 
 ### Mapping field names from source to destination
