@@ -27,6 +27,16 @@ class WordPressUserSource implements SourceInterface
         $this->prefix = $prefix;
     }
 
+    /**
+     * Sets how many users are retrieved per page. Default is 10.
+     */
+    public function setPerPage(int $perPage): self
+    {
+        $this->perPage = $perPage;
+
+        return $this;
+    }
+
     private function getUserFields()
     {
         $sql = $this->getUserSQL(['*']);

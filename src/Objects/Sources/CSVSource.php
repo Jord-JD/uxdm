@@ -16,44 +16,89 @@ class CSVSource implements SourceInterface
     protected $enclosure = '"';
     protected $escape = '\\';
 
+    /** @var resource|null */
+    protected $fh;
+    protected $currentPage = 0;
+    protected $nextDataRowIndex = 0;
+
     public function __construct($file)
     {
         $this->file = $file;
 
-        $firstCSVLine = $this->getCSVLines(0, 1);
-        $this->fields = reset($firstCSVLine);
+        $this->resetHandle();
+        $this->fields = $this->readHeaderRow();
     }
 
-    protected function getCSVLines($offset, $amount)
+    public function __destruct()
     {
-        $lines = [];
-        $lineCount = 0;
-        $fh = fopen($this->file, 'r');
+        $this->closeHandle();
+    }
 
-        while (($line = fgetcsv($fh, 0, $this->delimiter, $this->enclosure, $this->escape)) !== false) {
-            if ($lineCount >= $offset && $lineCount < $offset + $amount) {
-                $lines[] = $line;
-            }
-
-            if ($lineCount >= $offset + $amount) {
-                break;
-            }
-
-            $lineCount++;
+    private function openHandle(): void
+    {
+        if (is_resource($this->fh)) {
+            return;
         }
 
-        return $lines;
+        $this->fh = fopen($this->file, 'r');
+
+        if (!is_resource($this->fh)) {
+            throw new \RuntimeException('Unable to open CSV file: '.$this->file);
+        }
+
+        $this->currentPage = 0;
+        $this->nextDataRowIndex = 0;
+    }
+
+    private function closeHandle(): void
+    {
+        if (is_resource($this->fh)) {
+            fclose($this->fh);
+        }
+
+        $this->fh = null;
+    }
+
+    private function resetHandle(): void
+    {
+        $this->closeHandle();
+        $this->openHandle();
+    }
+
+    private function readHeaderRow(): array
+    {
+        $this->openHandle();
+
+        $header = fgetcsv($this->fh, 0, $this->delimiter, $this->enclosure, $this->escape);
+
+        return is_array($header) ? $header : [];
     }
 
     public function getDataRows(int $page = 1, array $fieldsToRetrieve = []): array
     {
-        $offset = 1 + (($page - 1) * $this->perPage);
+        if ($page < 1) {
+            $page = 1;
+        }
 
-        $lines = $this->getCSVLines($offset, $this->perPage);
+        $desiredOffset = ($page - 1) * $this->perPage;
+
+        // If pages are requested sequentially (as Migrator does), keep reading from the current file position
+        // to avoid re-parsing the CSV from the start for every page.
+        if ($page !== $this->currentPage + 1 || $desiredOffset < $this->nextDataRowIndex) {
+            $this->resetHandle();
+            $this->fields = $this->readHeaderRow();
+
+            $skipped = 0;
+            while ($skipped < $desiredOffset && ($line = fgetcsv($this->fh, 0, $this->delimiter, $this->enclosure, $this->escape)) !== false) {
+                $skipped++;
+                $this->nextDataRowIndex++;
+            }
+        }
 
         $dataRows = [];
 
-        foreach ($lines as $line) {
+        $linesRead = 0;
+        while ($linesRead < $this->perPage && ($line = fgetcsv($this->fh, 0, $this->delimiter, $this->enclosure, $this->escape)) !== false) {
             $dataRow = new DataRow();
 
             foreach ($line as $key => $value) {
@@ -63,7 +108,12 @@ class CSVSource implements SourceInterface
             }
 
             $dataRows[] = $dataRow;
+
+            $linesRead++;
+            $this->nextDataRowIndex++;
         }
+
+        $this->currentPage = $page;
 
         return $dataRows;
     }
@@ -89,6 +139,8 @@ class CSVSource implements SourceInterface
     public function setPerPage(int $perPage): self
     {
         $this->perPage = $perPage;
+        $this->resetHandle();
+        $this->fields = $this->readHeaderRow();
 
         return $this;
     }
@@ -96,6 +148,8 @@ class CSVSource implements SourceInterface
     public function setDelimiter(string $delimiter): self
     {
         $this->delimiter = $delimiter;
+        $this->resetHandle();
+        $this->fields = $this->readHeaderRow();
 
         return $this;
     }
@@ -103,6 +157,8 @@ class CSVSource implements SourceInterface
     public function setEnclosure(string $enclosure): self
     {
         $this->enclosure = $enclosure;
+        $this->resetHandle();
+        $this->fields = $this->readHeaderRow();
 
         return $this;
     }
@@ -110,6 +166,8 @@ class CSVSource implements SourceInterface
     public function setEscape(string $escape): self
     {
         $this->escape = $escape;
+        $this->resetHandle();
+        $this->fields = $this->readHeaderRow();
 
         return $this;
     }

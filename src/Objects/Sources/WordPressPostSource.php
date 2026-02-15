@@ -15,6 +15,8 @@ class WordPressPostSource implements SourceInterface
     protected $postType;
     protected $perPage = 10;
     protected $prefix = 'wp_';
+    protected $termTaxonomies = [];
+    protected $termsSeparator = ',';
 
     public function __construct(PDO $pdo, $postType = 'post')
     {
@@ -27,6 +29,43 @@ class WordPressPostSource implements SourceInterface
     public function setTablePrefix($prefix)
     {
         $this->prefix = $prefix;
+    }
+
+    /**
+     * Sets how many posts are retrieved per page. Default is 10.
+     */
+    public function setPerPage(int $perPage): self
+    {
+        $this->perPage = $perPage;
+
+        return $this;
+    }
+
+    /**
+     * Include post terms/taxonomies (e.g. "category", "post_tag") in the returned fields and data rows.
+     *
+     * Values are returned as a separator-delimited string of term slugs for each taxonomy.
+     *
+     * @param array $taxonomies
+     */
+    public function withTerms(array $taxonomies = ['category', 'post_tag']): self
+    {
+        $this->termTaxonomies = $taxonomies;
+
+        // Ensure getFields() reflects the requested term taxonomies.
+        $this->fields = $this->getPostFields();
+
+        return $this;
+    }
+
+    /**
+     * Sets the separator used when concatenating multiple term slugs into a single field value.
+     */
+    public function setTermsSeparator(string $separator): self
+    {
+        $this->termsSeparator = $separator;
+
+        return $this;
     }
 
     private function getPostFields()
@@ -56,7 +95,13 @@ class WordPressPostSource implements SourceInterface
             $postMetaFields[] = $this->prefix.'postmeta.'.$row['meta_key'];
         }
 
-        return array_merge($postFields, $postMetaFields);
+        $fields = array_merge($postFields, $postMetaFields);
+
+        foreach ($this->termTaxonomies as $taxonomy) {
+            $fields[] = $this->prefix.'terms.'.$taxonomy;
+        }
+
+        return $fields;
     }
 
     private function getPostSQL($fieldsToRetrieve)
@@ -100,6 +145,24 @@ class WordPressPostSource implements SourceInterface
         return $sql;
     }
 
+    private function getPostTermsSQL($postID, array $taxonomies): string
+    {
+        $sql = 'select t.slug, tt.taxonomy';
+        $sql .= ' from '.$this->prefix.'term_relationships tr';
+        $sql .= ' join '.$this->prefix.'term_taxonomy tt on tr.term_taxonomy_id = tt.term_taxonomy_id';
+        $sql .= ' join '.$this->prefix.'terms t on tt.term_id = t.term_id';
+        $sql .= ' where tr.object_id = '.((int) $postID);
+
+        if ($taxonomies) {
+            $taxonomies = array_map(function ($taxonomy) {
+                return '\''.str_replace('\'', '\\\'', $taxonomy).'\'';
+            }, $taxonomies);
+            $sql .= ' and tt.taxonomy in ('.implode(', ', $taxonomies).')';
+        }
+
+        return $sql;
+    }
+
     private function bindLimitParameters(PDOStatement $stmt, $offset, $perPage)
     {
         $stmt->bindValue(1, $offset, PDO::PARAM_INT);
@@ -134,6 +197,36 @@ class WordPressPostSource implements SourceInterface
 
                 while ($postMetaRow = $postMetaStmt->fetch(PDO::FETCH_ASSOC)) {
                     $dataRow->addDataItem(new DataItem($this->prefix.'postmeta.'.$postMetaRow['meta_key'], $postMetaRow['meta_value']));
+                }
+
+                if ($this->termTaxonomies) {
+                    $termsSql = $this->getPostTermsSQL($postsRow['ID'], $this->termTaxonomies);
+                    $termsStmt = $this->pdo->prepare($termsSql);
+                    $termsStmt->execute();
+
+                    $termsByTaxonomy = [];
+                    while ($termsRow = $termsStmt->fetch(PDO::FETCH_ASSOC)) {
+                        $taxonomy = $termsRow['taxonomy'] ?? null;
+                        $slug = $termsRow['slug'] ?? null;
+
+                        if ($taxonomy && $slug) {
+                            $termsByTaxonomy[$taxonomy][] = $slug;
+                        }
+                    }
+
+                    foreach ($this->termTaxonomies as $taxonomy) {
+                        $fieldName = $this->prefix.'terms.'.$taxonomy;
+
+                        // Respect requested fields (when caller filters).
+                        if ($fieldsToRetrieve && !in_array($fieldName, $fieldsToRetrieve, true)) {
+                            continue;
+                        }
+
+                        $slugs = $termsByTaxonomy[$taxonomy] ?? [];
+                        $value = implode($this->termsSeparator, $slugs);
+
+                        $dataRow->addDataItem(new DataItem($fieldName, $value));
+                    }
                 }
             }
 

@@ -124,4 +124,18 @@ final class WordPressUserSourceTest extends TestCase
 
         $this->assertEquals(1, $source->countPages());
     }
+
+    public function testSetPerPageAffectsPagination()
+    {
+        $source = $this->createSource();
+        $source->setPerPage(1);
+
+        $this->assertEquals(2, $source->countPages());
+
+        $dataRows = $source->getDataRows(1, ['wp_users.ID']);
+        $this->assertCount(1, $dataRows);
+
+        $dataRows = $source->getDataRows(2, ['wp_users.ID']);
+        $this->assertCount(1, $dataRows);
+    }
 }

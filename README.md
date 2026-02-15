@@ -24,7 +24,6 @@ $migrator->setSource($pdoSource)                      // Source
 <p align="center">
     <a href="https://github.com/Jord-JD/uxdm/actions/workflows/phpunit.yml"><img src="https://github.com/Jord-JD/uxdm/actions/workflows/phpunit.yml/badge.svg?branch=master"></a>
     <a href="https://coveralls.io/github/Jord-JD/uxdm?branch=master"><img src="https://coveralls.io/repos/github/Jord-JD/uxdm/badge.svg?branch=master"></a>
-    <a href="https://styleci.io/repos/130364449"><img src="https://styleci.io/repos/130364449/shield?branch=master"></a>
     <a href="https://packagist.org/packages/jord-jd/uxdm/stats"><img src="https://img.shields.io/packagist/dt/Jord-JD/uxdm.svg"></a>
 </p>
 
@@ -259,3 +258,23 @@ new `email_hash` data item which contains an md5 of the email address, and then
 removes the original `email` data item. This new `email_hash` will then be 
 migrated to the destination database along with the other fields, excluding 
 the removed `email` field.
+
+### Skipping data rows during migration
+
+Sometimes you may wish to skip certain rows during a migration (for example, to filter out unwanted records).
+You can do this by providing a callback using `setSkipIfTrueCheck()`. If your callback returns `true` for a given
+data row, that row will be skipped and not sent to the destination(s).
+
+```php
+$migrator = new Migrator;
+$migrator->setSource($pdoSource)
+         ->setDestination($pdoDestination)
+         ->setFieldsToMigrate(['id', 'email', 'name', 'rank'])
+         ->setKeyFields(['id'])
+         ->setSkipIfTrueCheck(function (DataRow $dataRow) {
+             $rankDataItem = $dataRow->getDataItemByFieldName('rank');
+             return $rankDataItem->value !== 'Captain';
+         })
+         ->withProgressBar()
+         ->migrate();
+```

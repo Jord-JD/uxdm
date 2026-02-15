@@ -54,4 +54,34 @@ final class CSVDestinationTest extends TestCase
 
         $this->assertEquals($this->getExpectedFileContent($dataRows), $fileContent);
     }
+
+    public function testPutDataRowsWritesBlankColumnsForMissingValues()
+    {
+        $file = __DIR__.'/Data/destination.missing_blanks.csv';
+
+        $dataRows = [];
+
+        $dataRow = new DataRow();
+        $dataRow->addDataItem(new DataItem('BaseVehicle', '1995, Ford, Explorer'));
+        $dataRow->addDataItem(new DataItem('DriveType', '4WD'));
+        $dataRow->addDataItem(new DataItem('Part', '14077'));
+        $dataRows[] = $dataRow;
+
+        $dataRow = new DataRow();
+        $dataRow->addDataItem(new DataItem('BaseVehicle', '2017, Honda, Odyssey'));
+        $dataRow->addDataItem(new DataItem('Part', '143305'));
+        $dataRows[] = $dataRow;
+
+        $destination = new CSVDestination($file);
+        $destination->putDataRows($dataRows);
+        $destination->finishMigration();
+
+        $fileContent = file_get_contents($file);
+
+        $expectedFileContent = 'BaseVehicle,DriveType,Part'.PHP_EOL;
+        $expectedFileContent .= '"1995, Ford, Explorer",4WD,14077'.PHP_EOL;
+        $expectedFileContent .= '"2017, Honda, Odyssey",,143305'.PHP_EOL;
+
+        $this->assertEquals($expectedFileContent, $fileContent);
+    }
 }

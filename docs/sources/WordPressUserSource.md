@@ -20,6 +20,12 @@ If you wish, you can also change the table prefix, as shown below. If not change
 $wordPressUserSource->setTablePrefix('wp2_');
 ```
 
+If you wish, you can also change how many users are retrieved per page (default is 10).
+
+```php
+$wordPressUserSource->setPerPage(100);
+```
+
 ## Assigning to migrator
 
 To use the WordPress user source as part of a UXDM migration, you must assign it to the migrator. This process is the same for most sources.
@@ -27,4 +33,24 @@ To use the WordPress user source as part of a UXDM migration, you must assign it
 ```php
 $migrator = new Migrator;
 $migrator->setSource($wordPressUserSource);
+```
+
+## Field names and prefixes
+
+WordPress sources return field names prefixed with the WordPress table prefix and table name, for example:
+
+* `wp_users.ID`
+* `wp_users.user_login`
+* `wp_usermeta.first_name`
+
+When using the WordPress sources, you should use these full field names (including prefixes) in:
+
+* `setFieldsToMigrate()`
+* `setKeyFields()`
+* `setFieldMap()`
+
+To see the full list of fields available for your WordPress database, call:
+
+```php
+$fields = $wordPressUserSource->getFields();
 ```

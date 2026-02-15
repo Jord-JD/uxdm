@@ -136,4 +136,76 @@ final class WordPressPostSourceTest extends TestCase
 
         $this->assertEquals(1, $source->countPages());
     }
+
+    public function testSetPerPageAffectsPagination()
+    {
+        $source = $this->createSource();
+        $source->setPerPage(1);
+
+        $this->assertEquals(2, $source->countPages());
+
+        $dataRows = $source->getDataRows(1, ['wp_posts.ID']);
+        $this->assertCount(1, $dataRows);
+
+        $dataRows = $source->getDataRows(2, ['wp_posts.ID']);
+        $this->assertCount(1, $dataRows);
+    }
+
+    public function testWithTermsAddsFieldsAndValues()
+    {
+        $pdo = new PDO('sqlite::memory:');
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $pdo->exec('create table wp_posts (ID integer primary key, post_type text, post_title text, post_content text)');
+        $pdo->exec('create table wp_postmeta (meta_id integer primary key autoincrement, post_id integer, meta_key text, meta_value text)');
+        $pdo->exec('create table wp_terms (term_id integer primary key, slug text, name text)');
+        $pdo->exec('create table wp_term_taxonomy (term_taxonomy_id integer primary key, term_id integer, taxonomy text)');
+        $pdo->exec('create table wp_term_relationships (object_id integer, term_taxonomy_id integer)');
+
+        $pdo->exec("insert into wp_posts (ID, post_type, post_title, post_content) values (1, 'post', 'Post 1', 'Content 1')");
+        $pdo->exec("insert into wp_posts (ID, post_type, post_title, post_content) values (2, 'post', 'Post 2', 'Content 2')");
+
+        $pdo->exec("insert into wp_postmeta (post_id, meta_key, meta_value) values (1, 'test_key_1', 'test_value_1')");
+
+        $pdo->exec("insert into wp_terms (term_id, slug, name) values (1, 'cat-a', 'Cat A')");
+        $pdo->exec("insert into wp_terms (term_id, slug, name) values (2, 'tag-a', 'Tag A')");
+
+        $pdo->exec("insert into wp_term_taxonomy (term_taxonomy_id, term_id, taxonomy) values (1, 1, 'category')");
+        $pdo->exec("insert into wp_term_taxonomy (term_taxonomy_id, term_id, taxonomy) values (2, 2, 'post_tag')");
+
+        $pdo->exec('insert into wp_term_relationships (object_id, term_taxonomy_id) values (1, 1)');
+        $pdo->exec('insert into wp_term_relationships (object_id, term_taxonomy_id) values (1, 2)');
+        $pdo->exec('insert into wp_term_relationships (object_id, term_taxonomy_id) values (2, 1)');
+
+        $source = new WordPressPostSource($pdo, 'post');
+        $source->withTerms(['category', 'post_tag']);
+
+        $this->assertContains('wp_terms.category', $source->getFields());
+        $this->assertContains('wp_terms.post_tag', $source->getFields());
+
+        $fields = ['wp_posts.ID', 'wp_terms.category', 'wp_terms.post_tag'];
+        $dataRows = $source->getDataRows(1, $fields);
+
+        $this->assertCount(2, $dataRows);
+
+        $dataItems = $dataRows[0]->getDataItems();
+        $this->assertEquals('wp_posts.ID', $dataItems[0]->fieldName);
+        $this->assertEquals('1', $dataItems[0]->value);
+
+        $this->assertEquals('wp_terms.category', $dataItems[1]->fieldName);
+        $this->assertEquals('cat-a', $dataItems[1]->value);
+
+        $this->assertEquals('wp_terms.post_tag', $dataItems[2]->fieldName);
+        $this->assertEquals('tag-a', $dataItems[2]->value);
+
+        $dataItems = $dataRows[1]->getDataItems();
+        $this->assertEquals('wp_posts.ID', $dataItems[0]->fieldName);
+        $this->assertEquals('2', $dataItems[0]->value);
+
+        $this->assertEquals('wp_terms.category', $dataItems[1]->fieldName);
+        $this->assertEquals('cat-a', $dataItems[1]->value);
+
+        $this->assertEquals('wp_terms.post_tag', $dataItems[2]->fieldName);
+        $this->assertEquals('', $dataItems[2]->value);
+    }
 }
