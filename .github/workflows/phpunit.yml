@@ -10,22 +10,35 @@ jobs:
   test:
     runs-on: ubuntu-22.04
     strategy:
+      fail-fast: false
       matrix:
         php-version: ['7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3']
+    env:
+      COMPOSER_PROCESS_TIMEOUT: 0
+      COMPOSER_NO_INTERACTION: 1
+      COMPOSER_NO_AUDIT: 1
     steps:
       - uses: actions/checkout@v4
-      - name: Setup PHP
+      - name: Setup Composer (PHP 8.3)
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-version }}
+          php-version: '8.3'
           coverage: none
-          tools: composer:${{ matrix.php-version == '7.1' && 'v1' || 'v2' }}
+          tools: composer:v2
       - uses: actions/cache@v4
         with:
           path: vendor
           key: ${{ runner.os }}-php-${{ matrix.php-version }}-${{ hashFiles('composer.json') }}
           restore-keys: ${{ runner.os }}-php-${{ matrix.php-version }}-
+      - name: Configure Composer platform
+        run: composer config platform.php ${{ matrix.php-version }}
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
+        run: composer update --prefer-dist --no-progress
+      - name: Setup runtime PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          coverage: none
+          tools: none
       - name: Run PHPUnit
         run: ./vendor/bin/phpunit

@@ -23,7 +23,6 @@ $migrator->setSource($pdoSource)                      // Source
 
 <p align="center">
     <a href="https://github.com/Jord-JD/uxdm/actions/workflows/phpunit.yml"><img src="https://github.com/Jord-JD/uxdm/actions/workflows/phpunit.yml/badge.svg?branch=master"></a>
-    <a href="https://coveralls.io/github/Jord-JD/uxdm?branch=master"><img src="https://coveralls.io/repos/github/Jord-JD/uxdm/badge.svg?branch=master"></a>
     <a href="https://packagist.org/packages/jord-jd/uxdm/stats"><img src="https://img.shields.io/packagist/dt/Jord-JD/uxdm.svg"></a>
 </p>
 
