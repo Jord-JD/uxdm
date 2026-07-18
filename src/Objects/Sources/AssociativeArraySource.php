@@ -23,6 +23,10 @@ class AssociativeArraySource implements SourceInterface
 
     public function getDataRows(int $page = 1, array $fieldsToRetrieve = []): array
     {
+        if (!$fieldsToRetrieve) {
+            $fieldsToRetrieve = $this->getFields();
+        }
+
         $offset = 0 + (($page - 1) * $this->perPage);
 
         $arrayRows = array_slice($this->array, $offset, $this->perPage);

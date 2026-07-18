@@ -105,6 +105,10 @@ class PDOSource implements SourceInterface
 
     public function getDataRows(int $page = 1, array $fieldsToRetrieve = []): array
     {
+        if (!$fieldsToRetrieve) {
+            $fieldsToRetrieve = $this->getFields();
+        }
+
         $offset = (($page - 1) * $this->perPage);
 
         $sql = $this->getSQL($fieldsToRetrieve);

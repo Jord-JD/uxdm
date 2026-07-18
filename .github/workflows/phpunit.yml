@@ -12,28 +12,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3']
+        php-version: ['7.1', '7.4', '8.0', '8.2', '8.4', '8.5']
     env:
       COMPOSER_PROCESS_TIMEOUT: 0
       COMPOSER_NO_INTERACTION: 1
       COMPOSER_NO_AUDIT: 1
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Composer (PHP 8.3)
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.3'
-          coverage: none
-          tools: composer:v2
-      - name: Configure Composer platform
-        run: composer config platform.php ${{ matrix.php-version }}
-      - name: Install dependencies
-        run: composer update --prefer-dist --no-progress
-      - name: Setup runtime PHP
+      - name: Setup PHP and Composer
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
           coverage: none
-          tools: none
+          tools: composer:${{ matrix.php-version == '7.1' && '2.2' || 'latest' }}
+      - name: Install dependencies
+        run: composer update --prefer-dist --no-progress
       - name: Run PHPUnit
         run: ./vendor/bin/phpunit

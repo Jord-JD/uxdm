@@ -89,6 +89,8 @@ You can also use similar source and destination objects in the same migration. F
 
 Please see the [Sources & Destinations](/docs/uxdm-sources-and-destinations.md) page for more sources and destinations, and detailed documentation on their usage.
 
+Source objects can also be read directly. Calling `getDataRows()` without a field list now returns every available field; pass a field-name array as the second argument when you only need selected columns.
+
 ## Examples
 
 ### Database to database migration
