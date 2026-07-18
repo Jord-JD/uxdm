@@ -53,6 +53,10 @@ class XMLSource implements SourceInterface
 
     public function getDataRows(int $page = 1, array $fieldsToRetrieve = []): array
     {
+        if (!$fieldsToRetrieve) {
+            $fieldsToRetrieve = $this->getFields();
+        }
+
         $offset = (($page - 1) * $this->perPage);
 
         $domNodeList = $this->xpath->query($this->xpathQuery);

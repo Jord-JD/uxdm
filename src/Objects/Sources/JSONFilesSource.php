@@ -31,6 +31,10 @@ class JSONFilesSource implements SourceInterface
 
     public function getDataRows(int $page = 1, array $fieldsToRetrieve = []): array
     {
+        if (!$fieldsToRetrieve) {
+            $fieldsToRetrieve = $this->getFields();
+        }
+
         $offset = 0 + (($page - 1) * $this->perPage);
 
         $files = array_slice($this->files, $offset, $this->perPage);

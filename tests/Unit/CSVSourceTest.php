@@ -77,6 +77,14 @@ final class CSVSourceTest extends TestCase
         $this->assertCount(0, $dataRows);
     }
 
+    public function testGetDataRowsRetrievesAllFieldsByDefault()
+    {
+        $dataRows = $this->createSource()->getDataRows();
+
+        $this->assertCount(2, $dataRows);
+        $this->assertSame(['Title' => 'Adventures Of Me', 'Author' => 'Jordan Hall'], $dataRows[0]->toArray());
+    }
+
     public function testCountDataRows()
     {
         $source = $this->createSource();
